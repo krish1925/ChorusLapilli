@@ -1,0 +1,122 @@
+Krish Patel
+Professor Eggert
+Assignment 3:Chorus Lapilli
+
+Lab Report:
+
+
+Chorus lapilli is quite similar to TicTacToe, inspired by the game terni lapilli. Until the 7th piece is places on the baord, these games follow the same rules. However, in Chorus Lapilli, after both teams place three pieces on the board, the players can't place any further blocks on the board and must move pieces to an adjacent block. If a piece is in the center.
+
+The Chorus Lapilli code also has a very similar structure to that of TicTacToe, which uses the same classes and same implementation, where the only difference is the event handler(handleClick). The steps are fairly similar to the TicTacToe app:
+I first downloaded node.js and then restarted my laptop. I then opened visual studio code, where I opened terminal and changed my directory. From there, I checked the node version and npm version, and then created a react app names chorus-lapilli using the command
+
+"npx create-react-app chorus-lapilli" 
+
+
+I then opened this via visual studio code, and using the tutorial I created three classes: Square, Board, and Game, where Board has 9  Square functions. The square class is a button that displays X, O, or null depending on the status of the game and the players moves. The Board class contains 9 square subclasses, with values ranging from 0-8, and displayed with three rows and columns.
+
+The Board class contains the logic involved in processing the moves, identifying the players turn, prevent illegal moves from happening, keeps track of the history, and the display content of the game.
+
+After adding the CSS formatting to make the tictactoe visually appealing, and checking the code for errors, I then ran the program by opening terminal and running the command:
+
+npm start
+
+This then opens the app in a web browser with the default link : http://localhost:3000/.
+
+
+The square function his fairly simple, and just displays a button which can take on different values. This is the implementation for the Square function I've used.
+
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
+}
+
+I then worked on the board function, which is similar to the tictactoe version of the code. 
+
+Then for the Game, the constructor contains the history initialized with the following code:
+
+history:[{
+          squares: Array(9).fill(null),
+          move: null
+        };]
+Another variable is initialized, i.e stepNumber which stores the current step in the game history that the user is viewing. 
+
+A major update comes in the handleClick function, which uses another variable that stores information about the last square. However, if the number of steps that are already on the board is such that 3 pieces are places on the board by the player whose turn it is, it counts that as an invalid move. It then takes the input of the button, which needs to be one of the player's own pieces. If it matches the the player's turn, allows it to be places in valid positions(adjacent and empty positions) and xisNext changes. However, if there is already a piece in the middle and the next position doesn't pose as a winning move(checks through calculateWinner), then the move is counted as illegal and will reject any subsequent moves until the player undoes the move(either places it in the same block or moves to the previous move). Once again, it takes input from the player. If the player places the peice on the same position(which is stored in lastsqr), then it does get placed however xIsNext is not updated.
+
+These conditions and the subsequent ways the event is handles is as follows:
+
+if (this.state.stepNumber >= (6 + !this.state.xIsNext)) {
+    if (!squares[lastsqr]) {
+    if (lastsqr===i) {
+    squares[i] = this.state.xIsNext ? 'X': 'O';
+    this.setState({ history: history.concat([{ squares }]), stepNumber: history.length, xIsNext: this.state.xIsNext, lastsqr: i });
+    return;
+    }
+    if (validmove(i,lastsqr)=== false || squares[i]) return;
+    if (squares[4] === (this.state.xIsNext ? 'X' : 'O')) {
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    if (!calculateWinner(squares)) { squares[i] = null; return; }
+    }
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({ history: history.concat([{ squares }]), stepNumber: history.length, xIsNext: !this.state.xIsNext, lastsqr: i });
+    } 
+    else {
+    if (!squares[i]) return;
+    else if (squares[i] !== (this.state.xIsNext ? 'X' : 'O')) return;
+    squares[i] = null;
+    this.setState({ history: history.concat([{ squares }]), stepNumber: history.length, xIsNext: this.state.xIsNext, lastsqr: i });
+    }
+    } 
+    else {
+    if (squares[i]) return;
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({ history: history.concat([{ squares }]), stepNumber: history.length, xIsNext: !this.state.xIsNext, lastsqr: i });
+    }}
+
+Then another function is created (validmove), which stores and returns the legal moves to adjacent moves. It takes in the input in the form of square, and returns the neighbors of the square. 
+
+
+npm notice 
+npm notice 📦  chorus-lapilli@0.1.0
+npm notice === Tarball Contents === 
+npm notice 3.4kB README.md             
+npm notice 817B  package.json          
+npm notice 3.9kB public/favicon.ico    
+npm notice 1.2kB public/index.html     
+npm notice 5.3kB public/logo192.png    
+npm notice 9.7kB public/logo512.png    
+npm notice 492B  public/manifest.json  
+npm notice 67B   public/robots.txt     
+npm notice 639B  src/App.css           
+npm notice 4.8kB src/App.js            
+npm notice 246B  src/App.test.js       
+npm notice 639B  src/index.css         
+npm notice 558B  src/index.js          
+npm notice 2.6kB src/logo.svg          
+npm notice 362B  src/reportWebVitals.js
+npm notice 241B  src/setupTests.js     
+npm notice === Tarball Details === 
+npm notice name:          chorus-lapilli                          
+npm notice version:       0.1.0                                   
+npm notice filename:      chorus-lapilli-0.1.0.tgz                
+npm notice package size:  25.6 kB                                 
+npm notice unpacked size: 34.9 kB                                 
+npm notice shasum:        87a1cde99ed2e86b045f7fa40f664cf73fb6ba98
+npm notice integrity:     sha512-ovii8htLyPtNZ[...]nwQO2w7mWJssw==
+npm notice total files:   16                                      x
+npm notice 
+chorus-lapilli-0.1.0.tgz
+npm notice 
+npm notice New major version of npm available! 8.15.0 -> 9.4.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v9.4.2
+npm notice Run npm install -g npm@9.4.2 to update!
+npm notice 
+
+
+
+
+
+

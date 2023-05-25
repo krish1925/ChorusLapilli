@@ -1,0 +1,57 @@
+Krish Patel 
+Professor Eggert
+
+Assignment 3 - Tic Tac Toe              		Lab Report
+
+I first downloaded node.js and then restarted my laptop. I then opened visual studio code, where I opened terminal and changed my directory. From there, I checked the node version and npm version,
+ and then created a tic-tac-toe app using the "npx create-react-app tic-tac-toe" command. 
+
+I then opened this via visual studio code, and I created three classes: Square, Board, and Game, where Board has 9 subclasses(Square), and Game has one subclass Board. The square class is a button that displays X, O, or null depending on the status of the game and the players moves.
+
+The Board class contains 9 square subclasses, with values ranging from 0-8, and displayed with three rows and columns. For every square clicked, it executes the handleClick function of Game, which is yet to be created.
+
+After creating the classes with basic functionality, and adding the CSS formatting to make the tictactoe visually appealing, and checking the code for errors, I then ran the program by opening terminal and running the command:
+
+npm start
+
+This then opens the app in a web browser with the default link : http://localhost:3000/, which displays a grid similar to a TicTacToe board.
+
+
+ According to the code, when I configured the button for the squares (onClick => this.setState(value = 'X'), the squares would display X when clicked. I then deleted the constructor for the square class, and reconfigured the button to use Board's handleClick function, which records the value entered in the squares and determines if it is X's or O's turn.
+
+I further worked on the handleClick function, the main event handler of the app which takes in the square value as the argument. I then created a copy of the array used to keep track of the square's status using JavaScript's slice() function. There is almost no change from when I configured the button for the squares, however now this is being managed by the board rather than the squares and calls the event handler. Then using the boolean xIsNext, I kept track of the next players turn, which updates after the event handler is called. 
+
+I used this implementation to update either X or O in an empty box depending on who's turn is next(before the square is clicked)
+
+    const nextSquares = squares.slice();
+    if (xIsNext) {
+      nextSquares[i] = 'X';
+    } else {
+      nextSquares[i] = 'O';
+
+I then created another function (calculateWinner) which using the combination of winning patterns returns the winner if there is one, else returns null. The code for this function is as follows: 
+
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+
+The for loop cycles through lines, and if any match in the pattern is found(three pieces in a row), then it returns the player who's three pieces matches. In the Board class above, I wrote a function that outputs if the winner is found, or if it the next player's turn.
+
+At this point, the game works, and I did a few test runs to check whether the code works as expected.
+
+In the end, I added a time travel function that allows us to make use of the copies of the game's status after every move. This is done using the array history, a 2D array that stores the history of the game after each move. I then wrote the jumpto function which reverts the game to move specified, using setCurrentMove to access the history of the board for the move made.
+
+After this, the code, I tested the move to functions for any bugs that it might produce. 
